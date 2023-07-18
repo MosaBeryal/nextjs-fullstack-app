@@ -7,7 +7,7 @@
 }
 .img {
   object-fit: cover;
-  filter: grayscale(100%);
+  /* filter: grayscale(100%); */
 }
 .imgText {
   position: absolute;
@@ -32,4 +32,4 @@
   font-size: 1.1rem;
   font-weight: 300;
   text-align: justify;
-} 
+}
