@@ -25,3 +25,14 @@ a {
   flex-direction: column;
   justify-content: space-between;
 }
+.theme {
+  transition: all 1s ease;
+}
+.light {
+  background-color: white;
+  color: black;
+}
+.dark {
+  background-color: #111;
+  color: #bbb;
+}
