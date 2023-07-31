@@ -1,32 +1,61 @@
 import styles from "./page.module.css";
 import Image from "next/image";
-const BlogPost = () => {
+
+
+async function getData(id) {
+  const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error(data.message || "Something went wrong!");
+  }
+  return res.json();
+
+}
+
+
+export async function generateMetadata({ params }) {
+  const post = await getData(params.id)
+  return {
+    title: post.title,
+    description: post.desc
+  }
+}
+
+
+const BlogPost = async ({ params }) => {
+
+  const data = await getData(params.id)
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <div className={styles.info}>
           <h2 className={styles.title}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-          </h2>
+          </h2>{
+            data.title
+          }
           <p className={styles.desc}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+            {
+              data.desc
+            }
           </p>
           <div className={styles.author}>
             <Image
-              src="/profile.jpg"
+              src={data.img}
               alt=""
               width={40}
               height={40}
               className={styles.avator}
             />
-            <span className={styles.username}>Johan Doe</span>
+            <span className={styles.username}>{
+              data.username}</span>
           </div>
         </div>
         <div className={styles.imageContainer}>
           <Image
-            src="/websites.jpg"
+            src={data.img}
             alt=""
             width={400}
             height={300}
@@ -36,16 +65,7 @@ const BlogPost = () => {
       </div>
       <div className={styles.content}>
         <p className={styles.text}>
-          What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing
-          and typesetting industry. Lorem Ipsum has been the industry's standard
-          dummy text ever since the 1500s, when an unknown printer took a galley
-          of type and scrambled it to make a type specimen book. It has survived
-          not only five centuries, but also the leap into electronic
-          typesetting, remaining essentially unchanged,Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s, when an unknown
-          printer took a galley of type and scrambled it to make a type specimen
-          book. It has survived not only five centuries, but also the leap into
-          electronic typesetting, remaining essentially unchanged.
+          {data.content}
         </p>
       </div>
     </div>
